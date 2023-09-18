@@ -1,57 +1,49 @@
+// Importing necessary files
 const { gql } = require('apollo-server-express');
 
+// Adding query and mutation typeDefs
 const typeDefs = gql`
-  type User {
-    _id: ID!
-    username: String!
-    email: String!
-    bookCount: Int
-    savedBooks: [Book]
-  }
+    type Query {
+        me: User
+    }
 
-  type Book {
-    bookId: String!
-    authors:[String]
-    description: String!
-    title: String!
-    image: String
-    link: String
-  }
+    type Mutation {
+        login ( email: String!, password: String! ): Auth
+        addUser ( username: String!, email: String!, password: String! ): Auth
+        saveBook ( input: savedBook! ): User
+        removeBook ( bookId: ID! ): User
+    }
 
-  type Auth {
-    token: ID!
-    user: User
-  }
+    type User {
+        _id: ID!
+        username: String!
+        email: String!
+        bookCount: Int!
+        savedBooks: [Book]
+    }
 
-  type Query {
-    me: User
-  }
+    type Book {
+        bookId: String
+        title: String
+        authors: [String]
+        description: String
+        image: String
+        link: String
+    }
 
-  type Mutation {
-    login(
-      email: String!, 
-      password: String!
-    ): Auth
+    type Auth {
+        token: ID!
+        user: User
+    }
 
-    addUser(
-      username: String!, 
-      email: String!, 
-      password: String!
-    ): Auth
-
-    saveBook(
-      bookId: String!,
-      authors:[String],
-      description: String!,
-      title: String!,
-      image: String,
-      link: String
-    ): User
-    
-    removeBook(
-      bookId: String!
-    ): User
-  }
+    input savedBook {
+        bookId: String
+        title: String
+        authors: [String]
+        description: String
+        image: String
+        link: String
+    }
 `;
 
 module.exports = typeDefs;

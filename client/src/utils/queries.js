@@ -1,6 +1,8 @@
+// Importing necessary files
 import { gql } from '@apollo/client';
 
-export const QUERY_ME = gql`
+// Setting query for logged in user
+export const GET_ME = gql`
     query me {
         me {
             _id
@@ -10,8 +12,8 @@ export const QUERY_ME = gql`
             savedBooks {
                 bookId
                 title
-                description
                 authors
+                description
                 image
                 link
             }
